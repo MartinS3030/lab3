@@ -8,11 +8,12 @@ const url = require('url');
 http.createServer((req, res) => {
     const q = url.parse(req.url, true);
     const pathname = q.pathname;
+    console.log(pathname);
 
-    if (pathname === '/COMP4537/labs/3/getDate') {
+    if (pathname === '/COMP4537/labs/3/getDate/') {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end(`<p style="color:blue;">${util.formatString(strings.greeting, q.query["name"], util.getDate())}</p>`);
-    } else if (pathname === '/COMP4537/labs/3/writeFile') {
+    } else if (pathname === '/COMP4537/labs/3/writeFile/') {
         const fs = require('fs');
         const text = q.query["text"];
         fs.appendFile('file.txt', text + '\n', (err) => {
@@ -24,13 +25,14 @@ http.createServer((req, res) => {
                 res.end('<h1 style="color:green;">File written successfully</h1>');
             }
         });
-    } else if (pathname === '/COMP4537/labs/3/readFile') {
+    } else if (pathname === '/COMP4537/labs/3/readFile/') {
         const fs = require('fs');
-        const filename = q.query;
+        const filename = Object.keys(q.query)[0];
+        console.log(filename);
         fs.readFile(filename, (err, data) => {
             if (err) {
                 res.writeHead(500, {'Content-Type': 'text/html'});
-                res.end('<h1 style="color:red;">500 Internal Server Error</h1>');
+                res.end(`<h1 style="color:red;">404: ${filename} does not exist</h1>`);
             } else {
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(data);
