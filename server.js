@@ -1,7 +1,7 @@
-const { strings } = require('./COMP4537/labs/3/lang/en/en.js');
+const { strings } = require('./lang/en/en.js');
 
 const http = require('http');
-const util = require('./COMP4537/labs/3/modules/utils.js');
+const util = require('./modules/utils.js');
 const url = require('url');
 
 
