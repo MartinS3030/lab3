@@ -19,10 +19,10 @@ http.createServer((req, res) => {
         fs.appendFile('file.txt', text + '\n', (err) => {
             if (err) {
                 res.writeHead(500, {'Content-Type': 'text/html'});
-                res.end('<h1 style="color:red;">500 Internal Server Error</h1>');
+                res.end(`<h1 style="color:red;">${strings.writeError}</h1>`);
             } else {
                 res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end('<h1 style="color:green;">File written successfully</h1>');
+                res.end(`<h1 style="color:green;">${strings.writeSuccess}</h1>`);
             }
         });
     } else if (pathname === '/COMP4537/labs/3/readFile/') {
@@ -31,8 +31,8 @@ http.createServer((req, res) => {
         console.log(filename);
         fs.readFile(filename, (err, data) => {
             if (err) {
-                res.writeHead(500, {'Content-Type': 'text/html'});
-                res.end(`<h1 style="color:red;">404: ${filename} does not exist</h1>`);
+                res.writeHead(404, {'Content-Type': 'text/html'});
+                res.end(`<h1 style="color:red;">${util.formatString(strings.readError, filename)}</h1>`);
             } else {
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(data);
@@ -40,6 +40,6 @@ http.createServer((req, res) => {
         });
     } else {
         res.writeHead(404, {'Content-Type': 'text/html'});
-        res.end('<h1 style="color:red;">404 Not Found</h1>');
+        res.end(`<h1 style="color:red;">${strings.notFound}</h1>`);
     }
 }).listen(3000);
