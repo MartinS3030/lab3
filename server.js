@@ -93,6 +93,15 @@ class Server {
     const q = url.parse(req.url, true);
     const pathname = q.pathname;
 
+    if (req.method === "OPTIONS") {
+      res.writeHead(200, {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      });
+      return res.end();
+    }
+
     switch (req.method) {
       case "GET":
         switch (pathname) {
